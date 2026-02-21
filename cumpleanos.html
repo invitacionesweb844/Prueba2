@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Fiesta de Cumpleaños — Valeria 25!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Pacifico&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --magenta: #e91e8c;
+      --cyan: #00e5ff;
+      --yellow: #ffe066;
+      --purple: #7c3aed;
+      --dark: #0d0515;
+      --dark2: #160a28;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--dark);
+      color: #fff;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--magenta);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, background 0.3s;
+      mix-blend-mode: screen;
+      box-shadow: 0 0 12px var(--magenta);
+    }
+
+    /* Background */
+    .bg-wrap {
+      position: fixed; inset: 0; z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(233,30,140,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(0,229,255,0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.15) 0%, transparent 60%),
+        var(--dark);
+    }
+
+    /* Confetti particles */
+    .confetti-wrap {
+      position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    }
+
+    .dot {
+      position: absolute;
+      border-radius: 50%;
+      animation: fallDown linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes fallDown {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* SECTIONS wrapper */
+    .page { position: relative; z-index: 2; }
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px 40px;
+      position: relative;
+    }
+
+    .hero-top-tag {
+      background: rgba(233,30,140,0.15);
+      border: 1px solid rgba(233,30,140,0.5);
+      color: var(--magenta);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 7px 20px;
+      border-radius: 50px;
+      margin-bottom: 30px;
+      display: inline-block;
+      animation: pulseTag 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseTag {
+      0%, 100% { box-shadow: 0 0 10px rgba(233,30,140,0.3); }
+      50%       { box-shadow: 0 0 28px rgba(233,30,140,0.7); }
+    }
+
+    .age-number {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(9rem, 25vw, 18rem);
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--magenta), var(--cyan), var(--yellow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 40px rgba(233,30,140,0.5));
+      animation: glowPulse 3s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { filter: drop-shadow(0 0 30px rgba(233,30,140,0.4)); }
+      50%       { filter: drop-shadow(0 0 60px rgba(0,229,255,0.5)); }
+    }
+
+    .hero-name {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      color: #fff;
+      text-shadow: 0 0 30px rgba(233,30,140,0.6), 0 2px 4px rgba(0,0,0,0.8);
+      margin-top: -10px;
+      animation: slideUp 0.9s cubic-bezier(0.22,1,0.36,1) both;
+      animation-delay: 0.3s;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 18px;
+      letter-spacing: 0.04em;
+      animation: slideUp 0.9s ease both;
+      animation-delay: 0.55s;
+    }
+
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 28px 0;
+      animation: slideUp 0.9s ease both;
+      animation-delay: 0.7s;
+    }
+
+    .hero-divider span {
+      height: 1px;
+      width: 80px;
+      background: linear-gradient(90deg, transparent, var(--magenta));
+    }
+
+    .hero-divider span:last-child {
+      background: linear-gradient(90deg, var(--cyan), transparent);
+    }
+
+    .hero-divider-icon { font-size: 1.4rem; }
+
+    .hero-date-info {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: slideUp 0.9s ease both;
+      animation-delay: 0.85s;
+      margin-bottom: 40px;
+    }
+
+    .info-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      padding: 12px 22px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+    }
+
+    .info-pill-icon { font-size: 1.1rem; }
+
+    /* ---- COUNTDOWN ---- */
+    .countdown-section {
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 14px;
+    }
+
+    .section-heading {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 0.04em;
+      margin-bottom: 40px;
+      color: #fff;
+    }
+
+    .countdown-grid {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .count-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 24px 28px;
+      min-width: 90px;
+      transition: transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .count-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(233,30,140,0.1), rgba(0,229,255,0.05));
+      border-radius: inherit;
+    }
+
+    .count-box:hover { transform: translateY(-6px); }
+
+    .count-num {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 3.2rem;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--magenta), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .count-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 4px;
+    }
+
+    /* ---- SCHEDULE ---- */
+    .schedule-section {
+      padding: 80px 24px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .schedule-list::before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--magenta), var(--cyan), transparent);
+    }
+
+    .schedule-item {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding: 20px 0;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .schedule-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .schedule-dot {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--magenta), var(--purple));
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 0 20px rgba(233,30,140,0.4);
+      z-index: 1;
+    }
+
+    .schedule-text { padding-top: 8px; }
+    .schedule-time {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .schedule-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .schedule-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+
+    /* ---- RSVP ---- */
+    .rsvp-section {
+      padding: 80px 24px;
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .rsvp-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 44px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rsvp-card::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--magenta), var(--cyan), var(--yellow));
+    }
+
+    .rsvp-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--magenta), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .rsvp-sub {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 28px;
+    }
+
+    .rsvp-input {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      padding: 14px 18px;
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .rsvp-input:focus {
+      border-color: var(--magenta);
+      box-shadow: 0 0 0 3px rgba(233,30,140,0.15);
+    }
+
+    .rsvp-input::placeholder { color: rgba(255,255,255,0.3); }
+
+    .rsvp-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .rsvp-btn-yes, .rsvp-btn-no {
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .rsvp-btn-yes {
+      background: linear-gradient(135deg, var(--magenta), var(--purple));
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(233,30,140,0.35);
+    }
+
+    .rsvp-btn-yes:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(233,30,140,0.5); }
+
+    .rsvp-btn-no {
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .rsvp-btn-no:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+    /* ---- FOOTER ---- */
+    .inv-footer {
+      text-align: center;
+      padding: 40px 24px 60px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.8rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .inv-footer a {
+      color: var(--magenta);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    /* Fireworks burst */
+    .burst {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    .spark {
+      position: absolute;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      animation: sparkFly 0.8s ease-out forwards;
+    }
+
+    @keyframes sparkFly {
+      0%   { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+    }
+
+    /* Fade in sections */
+    .fade-sec {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-sec.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 480px) {
+      .hero-date-info { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- Confetti -->
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<!-- BG -->
+<div class="bg-wrap"></div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-top-tag">🎉 ¡Estás Invitado!</div>
+    <div class="age-number">25</div>
+    <h1 class="hero-name">Valeria</h1>
+    <p class="hero-sub">¡La fiesta más esperada del año!</p>
+
+    <div class="hero-divider">
+      <span></span>
+      <span class="hero-divider-icon">✨</span>
+      <span></span>
+    </div>
+
+    <div class="hero-date-info">
+      <div class="info-pill">
+        <span class="info-pill-icon">📅</span>
+        <span>Sábado, 14 de Junio 2026</span>
+      </div>
+      <div class="info-pill">
+        <span class="info-pill-icon">⏰</span>
+        <span>8:00 PM en adelante</span>
+      </div>
+      <div class="info-pill">
+        <span class="info-pill-icon">📍</span>
+        <span>Jardín Las Estrellas, Durango</span>
+      </div>
+    </div>
+
+    <div class="info-pill fade-sec">
+      <span class="info-pill-icon">👗</span>
+      <span><strong>Dress Code:</strong> Elegante — Colores vibrantes</span>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="countdown-section fade-sec">
+    <p class="section-eyebrow">⏳ Falta poco…</p>
+    <h2 class="section-heading">La cuenta regresiva</h2>
+    <div class="countdown-grid">
+      <div class="count-box">
+        <div class="count-num" id="cd-dias">00</div>
+        <div class="count-label">Días</div>
+      </div>
+      <div class="count-box">
+        <div class="count-num" id="cd-horas">00</div>
+        <div class="count-label">Horas</div>
+      </div>
+      <div class="count-box">
+        <div class="count-num" id="cd-mins">00</div>
+        <div class="count-label">Minutos</div>
+      </div>
+      <div class="count-box">
+        <div class="count-num" id="cd-segs">00</div>
+        <div class="count-label">Segundos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="schedule-section">
+    <p class="section-eyebrow">🎶 El programa</p>
+    <h2 class="section-heading" style="text-align:center; margin-bottom:40px;">La noche perfecta</h2>
+
+    <div class="schedule-list">
+      <div class="schedule-item">
+        <div class="schedule-dot">🎊</div>
+        <div class="schedule-text">
+          <div class="schedule-time">8:00 PM</div>
+          <div class="schedule-title">Bienvenida y Cóctel</div>
+          <div class="schedule-desc">Drinks de bienvenida, música lounge y fotos en el photobooth.</div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-dot">🍽️</div>
+        <div class="schedule-text">
+          <div class="schedule-time">9:00 PM</div>
+          <div class="schedule-title">Cena Especial</div>
+          <div class="schedule-desc">Menú diseñado para esta noche única.</div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-dot">🎂</div>
+        <div class="schedule-text">
+          <div class="schedule-time">10:30 PM</div>
+          <div class="schedule-title">¡El Pastel!</div>
+          <div class="schedule-desc">El momento más esperado. ¡Que empiece la fiesta!</div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-dot">🕺</div>
+        <div class="schedule-text">
+          <div class="schedule-time">11:00 PM</div>
+          <div class="schedule-title">Pista de Baile Abierta</div>
+          <div class="schedule-desc">DJ en vivo. La noche no termina hasta que tú digas.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="rsvp-section fade-sec">
+    <div class="rsvp-card">
+      <div class="rsvp-title">¿Vienes? 🎉</div>
+      <p class="rsvp-sub">Confirma tu asistencia antes del 7 de Junio</p>
+      <input class="rsvp-input" type="text" placeholder="Tu nombre completo" id="rsvpName" />
+      <div class="rsvp-btns">
+        <button class="rsvp-btn-yes" onclick="confirmRsvp(true)">✅ ¡Ahí estaré!</button>
+        <button class="rsvp-btn-no" onclick="confirmRsvp(false)">😔 No podré ir</button>
+      </div>
+      <p id="rsvpMsg" style="font-size:0.85rem; color:rgba(255,255,255,0.5); min-height:20px;"></p>
+    </div>
+  </section>
+
+  <footer class="inv-footer">
+    <p>✦ Invitación digital creada por <a href="#">InvitacionesWeb 2026</a></p>
+    <p style="margin-top:6px;">Te queremos muchísimo, Valeria 🎂💕</p>
+  </footer>
+
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+
+  // Confetti
+  const confWrap = document.getElementById('confettiWrap');
+  const colors = ['#e91e8c','#00e5ff','#ffe066','#7c3aed','#ff6b6b','#69ffb4'];
+  for (let i = 0; i < 55; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    const size = Math.random() * 8 + 4;
+    dot.style.cssText = `
+      width:${size}px; height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      left:${Math.random()*100}%;
+      top:${Math.random()*-100}px;
+      animation-duration:${Math.random()*8+6}s;
+      animation-delay:${Math.random()*6}s;
+    `;
+    confWrap.appendChild(dot);
+  }
+
+  // Countdown to June 14, 2026 8pm
+  function updateCountdown() {
+    const target = new Date('2026-06-14T20:00:00');
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('cd-dias').textContent = '¡HOY!';
+      return;
+    }
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000) / 60000);
+    const secs  = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-dias').textContent  = String(days).padStart(2,'0');
+    document.getElementById('cd-horas').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+    document.getElementById('cd-segs').textContent  = String(secs).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Intersection observer
+  const fadeEls = document.querySelectorAll('.fade-sec, .schedule-item');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  fadeEls.forEach(el => obs.observe(el));
+
+  // RSVP
+  function confirmRsvp(coming) {
+    const name = document.getElementById('rsvpName').value.trim();
+    const msg = document.getElementById('rsvpMsg');
+    if (!name) { msg.textContent = 'Por favor escribe tu nombre 😊'; return; }
+    if (coming) {
+      msg.textContent = `¡Yay! ¡Nos vemos pronto, ${name}! 🎉✨`;
+      msg.style.color = '#ffe066';
+      launchFireworks();
+    } else {
+      msg.textContent = `Qué pena, ${name}. ¡Te extrañaremos! 💕`;
+      msg.style.color = 'rgba(255,255,255,0.5)';
+    }
+  }
+
+  // Fireworks on RSVP
+  function launchFireworks() {
+    for (let f = 0; f < 5; f++) {
+      setTimeout(() => {
+        const burst = document.createElement('div');
+        burst.className = 'burst';
+        burst.style.left = (20 + Math.random()*60) + 'vw';
+        burst.style.top  = (10 + Math.random()*50) + 'vh';
+        document.body.appendChild(burst);
+        const fwColors = ['#e91e8c','#00e5ff','#ffe066','#69ffb4'];
+        for (let s = 0; s < 12; s++) {
+          const spark = document.createElement('div');
+          spark.className = 'spark';
+          const angle = (s/12)*360;
+          const dist = 40 + Math.random()*40;
+          const tx = Math.cos(angle*Math.PI/180)*dist + 'px';
+          const ty = Math.sin(angle*Math.PI/180)*dist + 'px';
+          spark.style.cssText = `background:${fwColors[s%fwColors.length]}; --tx:${tx}; --ty:${ty}; box-shadow:0 0 4px currentColor;`;
+          burst.appendChild(spark);
+        }
+        setTimeout(() => burst.remove(), 900);
+      }, f*200);
+    }
+  }
+
+  // Click sparkle
+  document.addEventListener('click', e => {
+    launchFireworks();
+  });
+</script>
+</body>
+</html>
